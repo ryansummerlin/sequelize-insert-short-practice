@@ -24,8 +24,14 @@ app.get('/puppies', async (req, res, next) => {
 // Use these values to BUILD a new Puppy in the database.
 // Respond to the request by sending a success message
 app.post('/puppies/build', async (req, res, next) => {
-    // Your code here
-})
+    [puppyName, ageYrs, weightLbs, breed, microchipped] = [req.body.name, req.body.ageYrs, req.body.weightLbs, req.body.breed, req.body.microchipped];
+
+    const newPuppy = Puppy.build({name: puppyName, ageYrs: ageYrs, weightLbs: weightLbs, breed: breed, microchipped: microchipped});
+
+    await newPuppy.save();
+
+    res.json({message: 'Success', data: newPuppy});
+});
 
 // STEP 2
 // Capture the name, ageYrs, breed, weightLbs, and microchipped attributes
@@ -33,8 +39,12 @@ app.post('/puppies/build', async (req, res, next) => {
 // Use these values to CREATE a new Puppy in the database.
 // Respond to the request by sending a success message
 app.post('/puppies/create', async (req, res, next) => {
-    // Your code here
-})
+    [puppyName, ageYrs, weightLbs, breed, microchipped] = [req.body.name, req.body.ageYrs, req.body.weightLbs, req.body.breed, req.body.microchipped];
+
+    const newPuppy = await Puppy.create({name: puppyName, ageYrs: ageYrs, weightLbs: weightLbs, breed: breed, microchipped: microchipped});
+
+    res.json({message: 'Success', data: newPuppy});
+});
 
 
 // Root route - DO NOT MODIFY
